@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Max\Mailer\Mailer;
+use App\Max\Mailer\MaxMailer;
 use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller

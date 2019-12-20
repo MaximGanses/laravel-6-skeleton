@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
 use MaxMailerInterface;
 
-class Mailer implements MaxMailerInterface
+class MaxMailer implements MaxMailerInterface
 {
     /** @var string */
     public $defaultMailer;
