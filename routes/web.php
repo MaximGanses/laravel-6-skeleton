@@ -24,3 +24,7 @@ Route::get('/mail/testDelayed','MailController@testDelayedAction');
 Route::get('/mail/testBulk','MailController@testBulkAction');
 
 Route::get('/slack/test','SlackController@testAction')->name('slack');
+
+Route::get('/sentry/debug-sentry', function () {
+    throw new Exception('My first Sentry error!');
+});
