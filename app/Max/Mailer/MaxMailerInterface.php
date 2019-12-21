@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Config as ConfigAlias;
+namespace App\Max\Mailer;
+
+use Illuminate\Mail\Mailable;
 
 interface MaxMailerInterface
 {
@@ -13,16 +15,15 @@ interface MaxMailerInterface
 
     /**
      * @param string $receiver
+     * @param Mailable $mailable
      * @param string $sender
      * @return mixed
      */
-    public function sendMail(string $receiver, string $sender = 'default');
+    public function sendMail(string $receiver, Mailable $mailable ,string $sender = 'default');
 
     /**
      * @param array $receivers
      * @param string $sender
      */
-    public function sendBulkMail(array $receivers, string $sender = 'default');
-
-    public function createMessage();
+    public function sendBulkMail(array $receivers,Mailable $mailable, string $sender = 'default');
 }

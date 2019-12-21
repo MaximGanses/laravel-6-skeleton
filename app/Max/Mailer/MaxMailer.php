@@ -5,33 +5,36 @@ namespace App\Max\Mailer;
 
 
 use App\Mail\TestMail;
+use App\Max\MaxEasyInterval;
+use DateInterval;
+use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailer;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
-use MaxMailerInterface;
+use Illuminate\Support\Facades\Redis;
+
 
 class MaxMailer implements MaxMailerInterface
 {
-    public function sendMail(string $receiver, string $sender = null)
+    public function sendMail(string $receiver, Mailable $mailable, string $sender = null)
     {
-        $sender = $this->checkDefaultSender($sender);
-        Mail::to('test@hotmail.com')
-            ->send(new TestMail());
+        Mail::to($receiver)
+            ->locale(App::getLocale())
+            ->queue($mailable);
     }
 
-    public function sendBulkMail(array $receivers, string $sender = null)
+    public function sendBulkMail(array $receivers, Mailable $mailable, string $sender = null)
     {
-        $sender = $this->checkDefaultSender($sender);
-        // TODO: Implement sendBulkMail() method.
+        Mail::to($receivers)
+            ->locale(App::getLocale())
+            ->queue($mailable);
     }
 
-    public function createMessage()
+    public function sendDelayedEmail(string $receiver, Mailable $mailable, MaxEasyInterval $interval, string $sender = null)
     {
-        // TODO: Implement createMessage() method.
-    }
-
-    /** @param string | null $sender */
-    public function checkDefaultSender($sender)
-    {
-        return null === $sender ? $this->defaultMailer : $sender;
+        Mail::to($receiver)
+            ->locale(App::getLocale())
+            ->later($interval->getDateInterval(), $mailable);
     }
 }
