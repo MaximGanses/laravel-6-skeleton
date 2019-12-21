@@ -4,38 +4,41 @@
 namespace App\Max\Slack;
 
 
-class MaxSlackMessage
+use Illuminate\Notifications\Messages\SlackMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Env;
+
+class MaxSlackMessage extends Notification
 {
-    /** @var string */
-    public $content;
+    private $defaultFrom;
+    private $defaultIcon;
+    private $channel;
+    private $message;
 
-    /** @var array | false */
-    public $attachment;
-
-    /** @var mixed */
-    public $styling;
-
-    public static function createFromForm($request, $content, $styling, $attachment = false): self
+    public function __construct(string $message,string $channel = '#general', $icon = ':ghost:')
     {
-        //TODO implement request
-        $message = new self();
-        $message->content = $content;
-        $message->styling = $styling;
-        if ($attachment) {
-            $message->attachment = $attachment;
-        }
-        return $message;
+        $this->message = $message;
+        $this->defaultFrom = Env::get('SLACK_DEFAULT_SENDER', 'Ghost');
+        $this->defaultIcon = ':ghost:';
+        $this->channel = $channel;
+    }
+    /**
+     * Get the notification's delivery channels.
+     *
+     * @return array
+     */
+    public function via()
+    {
+        return ['slack'];
     }
 
-    public static function createMessage($content, $styling, $attachment = false): self
+    public function toSlack()
     {
-        $message = new self();
-        $message->content = $content;
-        $message->styling = $styling;
-        if ($attachment) {
-            $message->attachment = $attachment;
-        }
-        return $message;
-    }
+        $message = $this->message;
 
+        return (new SlackMessage)
+            ->from($this->defaultFrom, $this->defaultIcon)
+            ->to($this->channel)
+            ->content($message);
+    }
 }
