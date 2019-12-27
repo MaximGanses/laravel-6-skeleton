@@ -11,7 +11,16 @@
 |
 */
 
+use App\Notifications\TestNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'controller@defaultAction')->name('homepage');
+//Route::get('/', 'controller@defaultAction')->name('homepage');
 Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
+
+
+Route::get('/mail/test','MailController@testAction');
+Route::get('/mail/testDelayed','MailController@testDelayedAction');
+Route::get('/mail/testBulk','MailController@testBulkAction');
+
+Route::get('/slack/test','SlackController@testAction')->name('slack');
