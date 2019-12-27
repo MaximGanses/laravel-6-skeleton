@@ -4,30 +4,24 @@
 namespace App\Max\Slack;
 
 
+
+use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Support\Env;
+use Illuminate\Support\Facades\Notification;
 
-class MaxSlack implements MaxSlackInterface
+class MaxSlack extends Notification
 {
-
-    private $defaultFrom;
-
+    private $defaultChannel;
     public function __construct()
     {
-        $this->defaultFrom = Env::get('SLACK_DEFAULT_SENDER', 'Ghost');
+        $this->defaultChannel = Env::get('SLACK_DEFAULT_CHANNEL'.'#general');
     }
 
-    public function sendSlackMessage(string $from, string $to, MaxSlackMessage $maxSlackMessage)
+    /** @param false | string $channel */
+    public function sendSlackMessage(string $message, $channel = false)
     {
-        // TODO: Implement sendSlackMessage() method.
-    }
-
-    public function createMessage(): MaxSlackMessage
-    {
-        // TODO: Implement createMessage() method.
-    }
-
-    public function sendDefaultSlackMessage(string $to, MaxSlackMessage $maxSlackMessage)
-    {
-        // TODO: Implement sendDefaultSlackMessage() method.
+        $channel = $channel ? $channel : $this->defaultChannel;
+        Notification::route('slack', env('SLACK_HOOK'))
+            ->notify(new MaxSlackMessage($message, $channel));
     }
 }
