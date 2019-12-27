@@ -14,5 +14,6 @@ yarn-error.log
 .idea/workspace.xml
 node_modules
 resources/sass/_variables.scss
-.idea/workspace.xml
 *.lock
+.idea
+composer.lock

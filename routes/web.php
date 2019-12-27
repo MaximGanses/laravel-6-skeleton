@@ -11,10 +11,6 @@
 |
 */
 
-use App\Notifications\TestNotification;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Support\Facades\Route;
-
 //Route::get('/', 'controller@defaultAction')->name('homepage');
 Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
 
