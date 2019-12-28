@@ -18,7 +18,7 @@ class CheckEnv extends Command
      *
      * @var string
      */
-    protected $description = 'Checks env for correct filled in env';
+    protected $description = 'Checks env for fields';
     private $fields = [
         'MAIL_DRIVER',
         'MAIL_HOST',
