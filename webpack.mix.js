@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-const browserSync = 'localhost';
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,6 +12,4 @@ const browserSync = 'localhost';
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
-
-mix.browserSync(browserSync);
+   .sass('resources/sass/app.scss', 'public/css');

@@ -12,6 +12,7 @@ class MailController extends Controller
     public function testAction(MaxMailer $mailer)
     {
         $mailer->sendMail('test@test.be',new TestMail());
+
         dump('mail send');
     }
 
