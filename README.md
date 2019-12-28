@@ -16,3 +16,21 @@ Copy .env.example to .env
 * Easy language switcher
 * Pusher
 * Webpack live sync
+
+
+## Install project
+
+Run command:
+`chmod +x ./scripts`
+
+Then run:
+`./install_project.sh`
+
+Now fill in the `.env` file.
+
+## Run project
+
+`./start_project.sh`
+`./horizon.sh`
+
+
