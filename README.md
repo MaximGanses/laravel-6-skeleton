@@ -12,7 +12,9 @@ Copy .env.example to .env
 - MAIL_DEFAULT_FROM='from@host.com' ==> default from email address
 
 ## Whats in the skeleton
-* Easy to user mailer (app/Max/Mailer)
+* Easy to use mailer (app/Max/Mailer)
+* Easy to use slack message sender (app/Max/Slack)
 * Easy language switcher
 * Pusher
 * Webpack live sync
+* Spatie cookie consent
