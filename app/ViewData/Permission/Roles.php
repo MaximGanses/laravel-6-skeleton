@@ -34,9 +34,9 @@ class Roles
                 'id' => $role->id,
                 'name' => $role->name,
                 'created' => $role->created_at,
-                'total' => sprintf('%s user(s) have this role', count($this->getDeleteAbleUsers($role))),
+                'total' => sprintf('%s user(s) have this role', count($this->getDeleteAblePermissions($role))),
                 'add' => $this->getAvailableUsers($role),
-                'delete' => $this->getDeleteAbleUsers($role),
+                'delete' => $this->getDeleteAblePermissions($role),
                 'permissions' => $this->getPermissions($role),
                 'permission_list' => $this->getPermissionList($role)
             ];
@@ -62,15 +62,15 @@ class Roles
         return $array;
     }
 
-    private function getDeleteAbleUsers(Role $role)
+    private function getDeleteAblePermissions(Role $role)
     {
-        $users = $role->users()->getResults();
+        $permissions = $role->permissions()->getResults();
         $array = [];
-        foreach ($users as $user) {
+        foreach ($permissions as $permission) {
             $array[] =
                 [
-                    'url' => sprintf('roles/%s/%s/delete', $role->id, $user->id),
-                    'name' => $user->name
+                    'url' => sprintf('roles/%s/%s/remove', $role->id, $permission->id),
+                    'name' => $permission->name
                 ];
         }
         return $array;
@@ -79,9 +79,12 @@ class Roles
     private function getPermissions(Role $role)
     {
         $arr = [];
-        foreach (Permission::all() as $permission) {
+        $permissions  = Permission::all()->reject(function (Permission $permission) use ($role) {
+            return $permission->hasRole($role->name);
+        });
+        foreach ($permissions as $permission) {
             $arr[] = [
-                'url' => sprintf('roles/permission/%s/%s', $permission->id, $role->id),
+                'url' => sprintf('permissions/%s/%s', $permission->id, $role->id),
                 'name' => $permission->name,
             ];
         }

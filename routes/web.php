@@ -10,7 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', 'HomeController@indexAction')->name('homepage');
 //Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
 
@@ -43,19 +42,3 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('permission')->group(function () {
-    Route::get('/','PermissionController@indexAction')->name('permission.index');
-
-    Route::get('/roles','PermissionController@RoleIndexAction')->name('permission.roles');
-    Route::any('/roles/create/new/role','PermissionController@createRoleAction')->name('permission.roles.create');
-    Route::get('/roles/{role}/{user}','PermissionController@addRoleToUserAction')->name('permission.roles.users');
-    Route::get('/roles/{role}/{user}/delete','PermissionController@deleteRoleFromUserAction')->name('permission.roles.users.delete');
-    Route::get('/roles/permission/{role}/{permission}','PermissionController@assignRoleToPermission')->name('permission.roles.users');
-
-    Route::get('/permissions','PermissionController@permissionIndexAction')->name('permission.permission');
-    Route::any('/permissions/create/new/permission','PermissionController@createPermissionAction')->name('permission.permission.create');
-    Route::get('/permissions/{permission}/{role}','PermissionController@assignPermissionToRole')->name('permission.permission.role');
-    Route::get('/permissions/{permission}/{role}/delete','PermissionController@assignPermissionToRole')->name('permission.permission.role');
-
-    Route::get('/user','PermissionController@indexAction')->name('permission.user');
-});

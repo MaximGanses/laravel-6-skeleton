@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\User;
 use App\ViewData\Permission\Dashboard;
 use App\ViewData\Permission\Permissions;
-use App\ViewData\Permission\Roles;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,11 +26,6 @@ class PermissionController extends Controller
         return view('permissions.index', ['info' => $dto->render]);
     }
 
-    public function roleIndexAction()
-    {
-        $dto = Roles::createDashboardDTO(Role::all());
-        return view('permissions.roles', ['info' => $dto->render]);
-    }
 
     public function permissionIndexAction()
     {
@@ -39,28 +33,13 @@ class PermissionController extends Controller
         return view('permissions.permissions', ['info' => $dto->render]);
     }
 
-    public function addRoleToUserAction(Role $role, User $user)
+
+    public function deleteRoleFromPermissionAction(Permission $permission, Role $role)
     {
-        // dd($role,$user);
-        $user->assignRole($role);
+        $permission->removeRole($role);
         return back()->withInput();
     }
 
-    public function deleteRoleFromUserAction(Role $role, User $user)
-    {
-        $user->removeRole($role);
-        return back()->withInput();
-    }
-
-    public function createRoleAction()
-    {
-        if ($this->request->getMethod() === 'POST') {
-            Role::create(['name' => $this->request->input('name')]);
-
-            return back()->withInput();
-        }
-        return back();
-    }
 
     public function createPermissionAction()
     {
@@ -90,4 +69,11 @@ class PermissionController extends Controller
         $permission->assignRole($role);
         return back()->withInput();
     }
+
+    public function removeRoleFromPermission(Role $role, Permission $permission)
+    {
+        $permission->removeRole($role);
+        return back()->withInput();
+    }
+
 }

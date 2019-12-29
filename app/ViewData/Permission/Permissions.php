@@ -46,14 +46,14 @@ class Permissions
     {
         /** @var User[] $nonmembers */
         $nonmembers = Role::all()->reject(function (Role $role) use ($permission) {
-            return $role->hasPermissionTo($role);
+            return $role->hasPermissionTo($permission);
         });
 
         $array = [];
         foreach ($nonmembers as $role) {
             $array[] =
                 [
-                    'url' => sprintf('permission/%s/%s', $permission->id, $role->id),
+                    'url' => sprintf('permissions/%s/%s', $permission->id, $role->id),
                     'name' => $role->name
                 ];
         }
@@ -70,7 +70,7 @@ class Permissions
         foreach ($roles as $role) {
             $array[] =
                 [
-                    'url' => sprintf('permission/%s/%s/delete', $permission->id, $role->id),
+                    'url' => sprintf('permissions/%s/%s/delete', $permission->id, $role->id),
                     'name' => $role->name
                 ];
         }
