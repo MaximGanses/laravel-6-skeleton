@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PermissionMadeEvent;
+use App\Events\PermissionRemovedEvent;
 use App\User;
 use App\ViewData\Permission\Dashboard;
 use App\ViewData\Permission\Permissions;
@@ -44,7 +46,8 @@ class PermissionController extends Controller
     public function createPermissionAction()
     {
         if ($this->request->getMethod() === 'POST') {
-            Permission::create(['name' => $this->request->input('name')]);
+//            Permission::create(['name' => $this->request->input('name')]);
+            event(new PermissionMadeEvent($this->request->input('name')));
             return back()->withInput();
         }
         return back();
@@ -73,6 +76,12 @@ class PermissionController extends Controller
     public function removeRoleFromPermission(Role $role, Permission $permission)
     {
         $permission->removeRole($role);
+        return back()->withInput();
+    }
+
+    public function removePermissionAction(Permission $permission)
+    {
+        event(new PermissionRemovedEvent($permission));
         return back()->withInput();
     }
 

@@ -24,13 +24,13 @@ Route::prefix('admin')->group(function () {
     Route::prefix('permissions')->group(function () {
         Route::get('/', 'PermissionController@permissionIndexAction')->name('permission.permission');
         Route::any('/create/new/permission', 'PermissionController@createPermissionAction')->name('permission.permission.create');
+        Route::get('/{permission}/delete', 'PermissionController@removePermissionAction')->name('permission.permission.delete');
         Route::get('/{permission}/{role}', 'PermissionController@assignPermissionToRole')->name('permission.permission.role');
         Route::get('/{permission}/{role}/delete', 'PermissionController@deleteRoleFromPermissionAction')->name('permission.permission.role');
     });
 
     Route::prefix('users')->group(function () {
-        Route::get('/', 'PermissionController@indexAction')->name('permission.user');
-        Route::get('/', 'PermissionController@indexAction')->name('permission.user');
+
     });
 
 });

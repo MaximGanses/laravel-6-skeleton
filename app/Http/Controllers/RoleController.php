@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RoleMadeEvent;
 use App\User;
 use App\ViewData\Permission\Roles;
 use Spatie\Permission\Models\Role;
@@ -38,7 +39,8 @@ class RoleController extends Controller
     public function createRoleAction()
     {
         if ($this->request->getMethod() === 'POST') {
-            Role::create(['name' => $this->request->input('name')]);
+            event(new RoleMadeEvent($this->request->input('name')));
+
 
             return back()->withInput();
         }
