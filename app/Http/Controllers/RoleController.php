@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\RoleMadeEvent;
+use App\Events\RoleRemovedEvent;
 use App\User;
 use App\ViewData\Permission\Roles;
 use Spatie\Permission\Models\Role;
@@ -40,8 +41,6 @@ class RoleController extends Controller
     {
         if ($this->request->getMethod() === 'POST') {
             event(new RoleMadeEvent($this->request->input('name')));
-
-
             return back()->withInput();
         }
         return back();
@@ -49,7 +48,7 @@ class RoleController extends Controller
 
     public function deleteRoleAction(Role $role)
     {
-        $role->delete();
+        event(new RoleRemovedEvent($role));
         return back()->withInput();
     }
 }

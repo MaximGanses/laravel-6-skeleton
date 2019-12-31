@@ -2,38 +2,26 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Permission\Models\Permission;
 
-class PermissionMadeEvent
+class PermissionMadeEvent implements ShouldQueue
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /** @var Permission */
     public $permission;
+
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param string $name
      */
     public function __construct(string $name)
     {
         $this->permission = Permission::create(['name' => $name]);
-    }
-
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
-    public function broadcastOn()
-    {
-        return new PrivateChannel('channel-name');
     }
 }

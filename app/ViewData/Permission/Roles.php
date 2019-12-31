@@ -16,11 +16,19 @@ class Roles
     /** @var array | mixed */
     public $render;
 
+    /** @var User[] */
+    public $users;
+
+    /** @var Permission[] */
+    public $permissions;
+
     /** Roles[] */
     public static function createDashboardDTO($roles): self
     {
         $dto = new Roles();
         $dto->roles = $roles;
+        $dto->users = User::all();
+        $dto->permissions = Permission::all();
         $dto->render = $dto->renderData($roles);
         return $dto;
     }
@@ -47,7 +55,7 @@ class Roles
     private function getAvailableUsers(Role $role)
     {
         /** @var User[] $nonmembers */
-        $nonmembers = User::all()->reject(function ($user) use ($role) {
+        $nonmembers = $this->users->reject(function ($user) use ($role) {
             return $user->hasRole($role->name);
         });
 
@@ -79,7 +87,7 @@ class Roles
     private function getPermissions(Role $role)
     {
         $arr = [];
-        $permissions  = Permission::all()->reject(function (Permission $permission) use ($role) {
+        $permissions = $this->permissions->reject(function (Permission $permission) use ($role) {
             return $permission->hasRole($role->name);
         });
         foreach ($permissions as $permission) {

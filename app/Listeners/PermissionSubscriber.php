@@ -5,10 +5,13 @@ namespace App\Listeners;
 use App\Events\PermissionMadeEvent;
 use App\Events\PermissionRemovedEvent;
 use App\Max\Slack\MaxSlack;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Events\Dispatcher;
 
 class PermissionSubscriber implements ShouldQueue
 {
+    /** @var MaxSlack  */
     private $slack;
 
     public function __construct()
@@ -17,7 +20,7 @@ class PermissionSubscriber implements ShouldQueue
     }
 
     /**
-     * Handle user login events.
+     * @param PermissionMadeEvent $event
      */
     public function handlePermissionMade(PermissionMadeEvent $event): void
     {
@@ -26,7 +29,8 @@ class PermissionSubscriber implements ShouldQueue
     }
 
     /**
-     * Handle user logout events.
+     * @param PermissionRemovedEvent $event
+     * @throws Exception
      */
     public function handlePermissionRemoved(PermissionRemovedEvent $event): void
     {
@@ -37,9 +41,9 @@ class PermissionSubscriber implements ShouldQueue
     /**
      * Register the listeners for the subscriber.
      *
-     * @param \Illuminate\Events\Dispatcher $events
+     * @param Dispatcher $events
      */
-    public function subscribe($events)
+    public function subscribe($events): void
     {
         $events->listen(
             PermissionMadeEvent::class,

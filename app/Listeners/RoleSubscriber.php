@@ -5,10 +5,13 @@ namespace App\Listeners;
 use App\Events\RoleMadeEvent;
 use App\Events\RoleRemovedEvent;
 use App\Max\Slack\MaxSlack;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Events\Dispatcher;
 
 class RoleSubscriber implements ShouldQueue
 {
+    /** @var MaxSlack  */
     private $slack;
 
     public function __construct()
@@ -17,7 +20,7 @@ class RoleSubscriber implements ShouldQueue
     }
 
     /**
-     * Handle user login events.
+     * @param RoleMadeEvent $event
      */
     public function handleRoleMade(RoleMadeEvent $event): void
     {
@@ -26,7 +29,8 @@ class RoleSubscriber implements ShouldQueue
     }
 
     /**
-     * Handle user logout events.
+     * @param RoleRemovedEvent $event
+     * @throws Exception
      */
     public function handleRoleRemoved(RoleRemovedEvent $event): void
     {
@@ -37,9 +41,9 @@ class RoleSubscriber implements ShouldQueue
     /**
      * Register the listeners for the subscriber.
      *
-     * @param \Illuminate\Events\Dispatcher $events
+     * @param Dispatcher $events
      */
-    public function subscribe($events)
+    public function subscribe($events): void
     {
         $events->listen(
             RoleMadeEvent::class,
