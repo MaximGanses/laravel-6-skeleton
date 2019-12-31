@@ -4,18 +4,12 @@
 namespace App\Max\Mailer;
 
 
-use App\Mail\TestMail;
 use App\Max\MaxEasyInterval;
-use DateInterval;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailer;
-use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redis;
 
 
 class MaxMailer extends Notification implements MaxMailerInterface, ShouldQueue

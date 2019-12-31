@@ -46,7 +46,6 @@ class PermissionController extends Controller
     public function createPermissionAction()
     {
         if ($this->request->getMethod() === 'POST') {
-//            Permission::create(['name' => $this->request->input('name')]);
             event(new PermissionMadeEvent($this->request->input('name')));
             return back()->withInput();
         }
@@ -84,5 +83,4 @@ class PermissionController extends Controller
         event(new PermissionRemovedEvent($permission));
         return back()->withInput();
     }
-
 }

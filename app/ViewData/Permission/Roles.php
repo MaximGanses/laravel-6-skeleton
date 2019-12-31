@@ -22,7 +22,10 @@ class Roles
     /** @var Permission[] */
     public $permissions;
 
-    /** Roles[] */
+    /** Roles[]
+     * @param $roles
+     * @return Roles
+     */
     public static function createDashboardDTO($roles): self
     {
         $dto = new Roles();
@@ -33,7 +36,9 @@ class Roles
         return $dto;
     }
 
-    /** @param Role[] $roles */
+    /** @param Role[] $roles
+     * @return array
+     */
     private function renderData($roles): array
     {
         $render = [];
@@ -52,7 +57,7 @@ class Roles
         return $render;
     }
 
-    private function getAvailableUsers(Role $role)
+    private function getAvailableUsers(Role $role): array
     {
         /** @var User[] $nonmembers */
         $nonmembers = $this->users->reject(function ($user) use ($role) {
@@ -70,7 +75,7 @@ class Roles
         return $array;
     }
 
-    private function getDeleteAblePermissions(Role $role)
+    private function getDeleteAblePermissions(Role $role): array
     {
         $permissions = $role->permissions()->getResults();
         $array = [];
@@ -84,7 +89,7 @@ class Roles
         return $array;
     }
 
-    private function getPermissions(Role $role)
+    private function getPermissions(Role $role): array
     {
         $arr = [];
         $permissions = $this->permissions->reject(function (Permission $permission) use ($role) {
@@ -99,7 +104,7 @@ class Roles
         return $arr;
     }
 
-    private function getPermissionList(Role $role)
+    private function getPermissionList(Role $role): array
     {
         $arr = [];
         $permissions = $role->permissions()->getResults();

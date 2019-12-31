@@ -21,7 +21,7 @@ class Dashboard
 
     public static function createDashboardDTO(int $roles, int $users, int $permissions): self
     {
-        $dto = new Dashboard();
+        $dto = new self();
         $dto->roles = $roles;
         $dto->users = $users;
         $dto->permissions = $permissions;
