@@ -30,7 +30,10 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('users')->group(function () {
-
+        Route::get('/', 'UserController@indexAction')->name('users');
+        Route::post('/create', 'UserController@createAction')->name('users.create');
+        Route::post('/edit', 'UserController@editAction')->name('users.edit');
+        Route::get('/delete', 'UserController@deleteAction')->name('users.delete');
     });
 
 });
