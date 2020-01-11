@@ -18,7 +18,7 @@ class MaxSlack extends Notification
     }
 
     /** @param false | string $channel */
-    public function sendSlackMessage(string $message, $channel = false)
+    public function sendSlackMessage(string $message, $channel = '#general')
     {
         $channel = $channel ? $channel : $this->defaultChannel;
         Notification::route('slack', env('SLACK_HOOK'))

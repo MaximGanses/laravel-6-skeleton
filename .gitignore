@@ -1,4 +1,4 @@
-/node_modules
+node_modules/*
 /public/hot
 /public/storage
 /storage/*.key
@@ -10,7 +10,7 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-.idea*
-.idea/workspace.xml
-node_modules
-resources/sass/_variables.scss
+package-lock.json
+.idea/*
+/public/js
+/public/css

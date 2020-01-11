@@ -79,7 +79,7 @@ return [
     */
 
     'waits' => [
-        'redis:default' => 60,
+        'redis:default' => 1,
     ],
 
     /*
@@ -143,17 +143,17 @@ return [
         'production' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default'],
-                'balance' => 'simple',
+                'queue' => ['default','email','slack'],
+                'balance' => 'auto',
                 'processes' => 10,
-                'tries' => 1,
+                'tries' => 3,
             ],
         ],
 
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'queue' => ['default','email'],
+                'queue' => ['default','email','slack'],
                 'balance' => 'auto',
                 'processes' => 2,
                 'tries' => 3,
