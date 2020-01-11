@@ -11,7 +11,7 @@
                 <th>Full name</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Actions</th>
+                <th class="text-right">Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -32,31 +32,33 @@
                             </form>
                         @else
                             @foreach($user->roles as $role)
-                                <div class="row">
-                                    <p>{{$role->name}}</p>
-                                    <a class="btn btn-danger" href="{{route('users.remove.roles',['role'=>$role,'user'=>$user])}}">Delete</a>
+                                <div class="p-2 d-flex align-items-center justify-content-between">
+                                    <p class="m-0">{{$role->name}}</p>
+                                    <a class="fas fa-times-circle text-danger"
+                                       href="{{route('users.remove.roles',['role'=>$role,'user'=>$user])}}"></a>
                                 </div>
-
                             @endforeach
                         @endif
                     </td>
                     <td>
-                        <form action="{{route('users.edit')}}" method="POST">
-                            @csrf
-                            <button type="button" class="btn btn-warning" data-toggle="modal"
-                                    data-target="#user{{$user->id}}">
-                                Edit user
-                            </button>
-                            @include('permissions.user_edit',['user'=>$user])
-                        </form>
-                        <form action="{{route('users.delete')}}" method="GET">
-                            @csrf
-                            <button type="button" class="btn btn-danger" data-toggle="modal"
-                                    data-target="#user-delete{{$user->id}}">
-                                Delete user
-                            </button>
-                            @include('permissions.user_delete',['user'=>$user])
-                        </form>
+                        <div class="row pr-2 d-flex justify-content-end">
+                            <form action="{{route('users.edit')}}" method="POST">
+                                @csrf
+                                <button type="button" class="btn btn-warning mr-1" data-toggle="modal"
+                                        data-target="#user{{$user->id}}">
+                                    Edit user
+                                </button>
+                                @include('permissions.user_edit',['user'=>$user])
+                            </form>
+                            <form action="{{route('users.delete')}}" method="GET">
+                                @csrf
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                        data-target="#user-delete{{$user->id}}">
+                                    Delete user
+                                </button>
+                                @include('permissions.user_delete',['user'=>$user])
+                            </form>
+                        </div>
                     </td>
                 </tr>
             @endforeach
