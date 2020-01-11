@@ -8,11 +8,10 @@
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
+|php
 */
-
-Route::get('/', 'HomeController@indexAction')->name('homepage');
-//Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
+//Route::get('/', 'HomeController@indexAction')->name('homepage');
+Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
 
 
 Route::get('/mail/test','MailController@testAction');
@@ -26,7 +25,7 @@ Route::get('/sentry/debug-sentry', function () {
 });
 
 Route::prefix('admin')->group(function () {
-    Route::get('/{locale}', 'HomeController@indexAction');
+//    Route::get('/{locale}', 'HomeController@indexAction');
 
 
     Route::get('/mail/test','MailController@testAction');
@@ -42,3 +41,4 @@ Route::prefix('admin')->group(function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
