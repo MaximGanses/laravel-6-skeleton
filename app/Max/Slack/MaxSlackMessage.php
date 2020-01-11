@@ -4,16 +4,21 @@
 namespace App\Max\Slack;
 
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Env;
 
-class MaxSlackMessage extends Notification
+class MaxSlackMessage extends Notification implements ShouldQueue
 {
     private $defaultFrom;
     private $defaultIcon;
     private $channel;
     private $message;
+
+    public $connection = 'redis';
+    public $queue = 'slack';
+    public $delay = 0;
 
     public function __construct(string $message,string $channel = '#general', $icon = ':ghost:')
     {
@@ -40,5 +45,10 @@ class MaxSlackMessage extends Notification
             ->from($this->defaultFrom, $this->defaultIcon)
             ->to($this->channel)
             ->content($message);
+    }
+
+    public function tags()
+    {
+        return ['slack', 'message:'. $this->message];
     }
 }
