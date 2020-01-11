@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-
     <div class="container">
         <h1>Add new user</h1>
 
-        <table class="table">
+        <table class="table table-sm">
             <thead>
             <tr>
                 <th>Id</th>
                 <th>Full name</th>
                 <th>Email</th>
+                <th>Roles</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -20,6 +20,22 @@
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
+                    <td>
+                        @if(count($user->roles) === 0)
+                            <form action="{{route('users.add.roles')}}" method="POST">
+                                @csrf
+                                <button type="button" class="btn btn-success" data-toggle="modal"
+                                        data-target="#user-role{{$user->id}}">
+                                    Add roles
+                                </button>
+                                @include('permissions.user_role',['roles'=> $roles])
+                            </form>
+                        @else
+                            @foreach($user->roles as $role)
+                                <p>{{$role->name}}</p>
+                            @endforeach
+                        @endif
+                    </td>
                     <td>
                         <form action="{{route('users.edit')}}" method="POST">
                             @csrf
@@ -43,9 +59,7 @@
 
             </tbody>
         </table>
-
         {{ $users->links() }}
-
         @include('permissions.user_input')
     </div>
 @endsection

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\UserException;
 use App\Repositories\UserRepository;
 use App\User;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
@@ -20,7 +21,7 @@ class UserController extends Controller
 
     public function indexAction()
     {
-        return view('permissions.users', ['users' => User::paginate(self::USERS_PER_PAGE)]);
+        return view('permissions.users', ['users' => User::paginate(self::USERS_PER_PAGE), 'roles' => Role::all()]);
     }
 
     public function createUserAction(UserRepository $repository)
@@ -76,6 +77,18 @@ class UserController extends Controller
         } catch (\Throwable $exception) {
             return back()->withInput();
         }
+
+        return back()->withInput();
+    }
+
+    public function addRoleToUserAction()
+    {
+        $roles = Role::whereIn('id', $this->request->input('roles'))->get();
+
+        /** @var User $user */
+        $user = User::findOrFail($this->request->input('id'));
+
+        $user->assignRole($roles);
 
         return back()->withInput();
     }

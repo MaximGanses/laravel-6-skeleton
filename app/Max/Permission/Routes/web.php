@@ -34,6 +34,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/create', 'UserController@createAction')->name('users.create');
         Route::post('/edit', 'UserController@editAction')->name('users.edit');
         Route::get('/delete', 'UserController@deleteAction')->name('users.delete');
+        Route::post('/add/roles', 'UserController@addRoleToUserAction')->name('users.add.roles');
     });
 
 });
