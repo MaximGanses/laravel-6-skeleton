@@ -10,4 +10,9 @@ class UserException extends Exception
     {
         return new self('No roles found');
     }
+
+    public static function RoleCouldNotBeAssignedToUser ():self
+    {
+        return new self('Role could not bet assign to user');
+    }
 }

@@ -48,17 +48,12 @@ class UserController extends Controller
 
     public function editAction()
     {
-        dd($this->request->input('id'));
         try {
             $user = User::findOrFail($this->request->input('id'));
-
-            dd($user);
             $user->update($this->request->input());
             $user->save();
             return back()->withInput();
         } catch (\Exception $exception) {
-
-            dd($exception->getMessage());
             return back()->withInput();
         }
     }
@@ -87,9 +82,13 @@ class UserController extends Controller
 
         /** @var User $user */
         $user = User::findOrFail($this->request->input('id'));
-
         $user->assignRole($roles);
+        return back()->withInput();
+    }
 
+    public function removeRoleFromUserAction(User $user, Role $role)
+    {
+        $user->removeRole($role);
         return back()->withInput();
     }
 }

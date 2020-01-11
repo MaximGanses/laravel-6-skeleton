@@ -32,7 +32,11 @@
                             </form>
                         @else
                             @foreach($user->roles as $role)
-                                <p>{{$role->name}}</p>
+                                <div class="row">
+                                    <p>{{$role->name}}</p>
+                                    <a class="btn btn-danger" href="{{route('users.remove.roles',['role'=>$role,'user'=>$user])}}">Delete</a>
+                                </div>
+
                             @endforeach
                         @endif
                     </td>
