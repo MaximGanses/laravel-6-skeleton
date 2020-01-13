@@ -37,6 +37,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/sentry/debug-sentry', function () {
         throw new Exception('My first Sentry error!');
     });
+    Route::prefix('images')->group(function () {
+
+        Route::any('new','ImageController@createAction')->name('images.create');
+    });
 });
 Auth::routes();
 
