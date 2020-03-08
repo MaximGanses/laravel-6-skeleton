@@ -18,3 +18,21 @@ Copy .env.example to .env
 * Pusher
 * Webpack live sync
 * Spatie cookie consent
+
+
+## Install project
+
+Run command:
+`chmod +x ./scripts`
+
+Then run:
+`./install_project.sh`
+
+Now fill in the `.env` file.
+
+## Run project
+
+`./start_project.sh`
+`./horizon.sh`
+
+
