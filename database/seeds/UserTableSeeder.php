@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use Illuminate\Support\Facades\Hash;
+
 class UserTableSeeder extends Seeder
 {
     /**
@@ -11,13 +13,18 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $data =
-            [
-                'name' => 'admin',
-                'email' => 'admin@admin.com',
-                'password' => 'admin',
-            ];
+        $amount = 10;
 
-        User::create($data);
+        for ($i = 1; $i <= $amount; $i++ )
+        {
+            $data =
+                [
+                    'name' => sprintf('admin%s', $i),
+                    'email' => sprintf('admin%s@admin.com', $i),
+                    'password' => Hash::make('admin'),
+                ];
+
+            User::create($data);
+        }
     }
 }
