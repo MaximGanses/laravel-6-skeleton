@@ -11,7 +11,7 @@
 |php
 */
 //Route::get('/', 'HomeController@indexAction')->name('homepage');
-Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
+//Route::get('/{locale}', 'HomeController@indexAction')->name('homepage');
 
 
 Route::get('/mail/test','MailController@testAction');
