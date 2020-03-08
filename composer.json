@@ -20,7 +20,8 @@
         "predis/predis": "^1.1",
         "sentry/sentry-laravel": "1.5.0",
         "spatie/laravel-permission": "^3.4",
-        "spatie/laravel-cookie-consent": "^2.11"
+        "spatie/laravel-cookie-consent": "^2.11",
+      "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

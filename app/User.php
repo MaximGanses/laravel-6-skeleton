@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','last_login_date','ip_address',
     ];
 
     /**
@@ -38,4 +38,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function getUsername(): string
+    {
+        return $this->name;
+    }
 }

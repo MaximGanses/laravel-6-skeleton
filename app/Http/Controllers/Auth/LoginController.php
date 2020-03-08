@@ -2,11 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Events\UserLoggedInEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\LoggingTrait;
+use App\Jobs\UserLoggedIn;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Queue\Jobs\Job;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
+use Psr\Log\LogLevel;
 
 class LoginController extends Controller
 {
+    use LoggingTrait;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -35,5 +45,11 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function authenticated(Request $request, User $user)
+    {
+        $this->logUsers(LogLevel::DEBUG, sprintf('User %s succefully logged in', $user->getUsername()));
+        UserLoggedIn::dispatch(new UserLoggedInEvent($user,$request))->onQueue('low');
     }
 }

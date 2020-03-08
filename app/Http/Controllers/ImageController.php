@@ -20,8 +20,7 @@ class ImageController extends Controller
             $request->validate(Image::VALIDATOR);
             $image = $request->file('image');
             $name = Str::slug($request->input('name')) . '_' . time();
-            $folder = '/uploads/images/';
-            $this->uploadOne($image, $folder, 'public', $name);
+            $this->uploadOne($image, self::UPLOAD_FOLDER, 'public', $name);
             return new Response('Image optimised');
         }
 

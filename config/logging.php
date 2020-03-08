@@ -91,9 +91,11 @@ return [
             'level' => 'debug',
         ],
 
-        'null' => [
-            'driver' => 'monolog',
-            'handler' => NullHandler::class,
+        'users' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/users.log'),
+            'level' => 'debug',
+            'days' => 14,
         ],
     ],
 
